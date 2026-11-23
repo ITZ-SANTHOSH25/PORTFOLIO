@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#080405" />
+<title>SANTHOSH — Portfolio / A Cinematic Horror Experience</title>
+<meta name="description" content="The cinematic portfolio of Santhosh — B.Tech Information Technology student, aspiring software developer, web developer and filmmaking enthusiast from Erode, Tamil Nadu, India." />
+<meta name="author" content="Santhosh" />
+
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
+<link rel="apple-touch-icon" href="assets/images/favicon.svg" />
+<link rel="preload" as="image" href="assets/images/intro-bedroom.webp" />
+<link rel="preload" as="image" href="assets/images/portfolio-bedroom.webp" />
+<link rel="stylesheet" href="assets/fonts/fonts.css" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="is-locked">
+
+<!-- ============================================================
+     CINEMATIC INTRO — MIRROR TITLE SHATTER
+============================================================ -->
+<div id="intro" class="intro" aria-label="Cinematic introduction">
+  <div class="intro__stage">
+    <div class="intro__bg">
+      <picture>
+        <source srcset="assets/images/intro-bedroom.webp" type="image/webp" />
+        <img src="assets/images/intro-bedroom.jpg" alt="A dark, red-lit bedroom with a terrifying inverted creature hanging from the ceiling" />
+      </picture>
+    </div>
+    <div class="intro__light intro__light--red"></div>
+    <div class="intro__light intro__light--pulse"></div>
+    <div class="intro__fog intro__fog--a"></div>
+    <div class="intro__fog intro__fog--b"></div>
+    <canvas id="intro-dust" class="intro__dust" aria-hidden="true"></canvas>
+    <div class="intro__vignette"></div>
+    <div class="intro__grain"></div>
+    <div class="intro__bars"><span></span><span></span></div>
+  </div>
+
+  <div class="intro__content">
+    <p class="intro__kicker" id="intro-kicker">
+      <span class="dot"></span> A SANTHOSH PRODUCTION <span class="dot"></span>
+    </p>
+
+    <div class="title-stage" id="title-stage">
+      <canvas id="title-canvas" class="title-canvas" aria-label="WELCOME TO SANTHOSH PORTFOLIO"></canvas>
+      <div class="shards" id="shards" aria-hidden="true"></div>
+      <div class="title-flash" id="title-flash" aria-hidden="true"></div>
+    </div>
+
+    <p class="intro__sub" id="intro-sub">SOMETHING IS WAITING BEHIND THE GLASS</p>
+
+  </div>
+
+  <button class="intro__skip" id="skip-intro" type="button" aria-label="Skip the introduction">
+    SKIP INTRO <span aria-hidden="true">›</span>
+  </button>
+
+  <div class="intro__corner intro__corner--tl" aria-hidden="true"></div>
+  <div class="intro__corner intro__corner--tr" aria-hidden="true"></div>
+  <div class="intro__corner intro__corner--bl" aria-hidden="true"></div>
+  <div class="intro__corner intro__corner--br" aria-hidden="true"></div>
+</div>
+
+<!-- ============================================================
+     PERSISTENT WORLD BACKGROUND
+============================================================ -->
+<div class="world" id="world" aria-hidden="true">
+  <div class="world__bg" id="world-bg">
+    <picture>
+      <source srcset="assets/images/portfolio-bedroom.webp" type="image/webp" />
+      <img src="assets/images/portfolio-bedroom.jpg" alt="" />
+    </picture>
+  </div>
+  <canvas id="world-canvas" class="world__canvas"></canvas>
+  <div class="world__fog world__fog--1"></div>
+  <div class="world__fog world__fog--2"></div>
+  <div class="world__fog world__fog--3"></div>
+  <div class="world__embers" id="embers"></div>
+  <div class="world__vignette"></div>
+  <div class="world__grain"></div>
+  <div class="world__scanlines"></div>
+</div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor__ring" id="cursor-ring"></div>
+  <div class="cursor__dot" id="cursor-dot"></div>
+  <div class="cursor__glow" id="cursor-glow"></div>
+</div>
+
+<!-- Scroll progress -->
+<div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+<!-- ============================================================
+     NAVIGATION + AUDIO HUD
+============================================================ -->
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#hero" data-cursor="hover" aria-label="Santhosh — back to top">
+    <span class="nav__mark">S</span>
+    <span class="nav__brand-text">SANTHOSH<em>PORTFOLIO / 2025</em></span>
+  </a>
+
+  <nav class="nav__links" id="nav-links" aria-label="Primary navigation">
+    <a href="#hero" class="nav__link is-active" data-cursor="hover"><span>00</span>HOME</a>
+    <a href="#about" class="nav__link" data-cursor="hover"><span>01</span>ABOUT</a>
+    <a href="#projects" class="nav__link" data-cursor="hover"><span>02</span>WORK</a>
+    <a href="#film" class="nav__link" data-cursor="hover"><span>03</span>FILM</a>
+    <a href="#skills" class="nav__link" data-cursor="hover"><span>04</span>SKILLS</a>
+    <a href="#contact" class="nav__link" data-cursor="hover"><span>05</span>CONTACT</a>
+  </nav>
+
+  <div class="nav__right">
+    <button class="nav__burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" data-cursor="hover">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <div class="mobile-menu__inner">
+    <p class="mobile-menu__label">NAVIGATE THE DARK</p>
+    <a href="#hero" class="mobile-menu__link" data-cursor="hover"><span>00</span>HOME</a>
+    <a href="#about" class="mobile-menu__link" data-cursor="hover"><span>01</span>ABOUT</a>
+    <a href="#projects" class="mobile-menu__link" data-cursor="hover"><span>02</span>WORK</a>
+    <a href="#film" class="mobile-menu__link" data-cursor="hover"><span>03</span>FILM</a>
+    <a href="#skills" class="mobile-menu__link" data-cursor="hover"><span>04</span>SKILLS</a>
+    <a href="#contact" class="mobile-menu__link" data-cursor="hover"><span>05</span>CONTACT</a>
+    <p class="mobile-menu__foot">ERODE · TAMIL NADU · INDIA</p>
+  </div>
+</div>
+
+<!-- ============================================================
+     MAIN PORTFOLIO
+============================================================ -->
+<main id="main" class="main">
+
+  <!-- HERO -->
+  <section class="hero section" id="hero" data-section="00">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow reveal"><span class="eyebrow__line"></span> PORTFOLIO / MMXXV</p>
+        <h1 class="hero__title">
+          <span class="hero__hello reveal">HELLO, I'M</span>
+          <span class="hero__name glitch" data-text="SANTHOSH">SANTHOSH</span>
+        </h1>
+        <p class="hero__role reveal">B.Tech Information Technology Student</p>
+        <p class="hero__sub reveal">Aspiring Software Developer <span>|</span> Web Developer <span>|</span> Filmmaking Enthusiast</p>
+
+        <div class="hero__actions reveal">
+          <a href="#projects" class="btn btn--primary" data-cursor="hover">
+            <span class="btn__glow"></span>
+            <span class="btn__text">EXPLORE MY WORK</span>
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#about" class="btn btn--ghost" data-cursor="hover">ABOUT ME</a>
+          <a href="#contact" class="btn btn--ghost" data-cursor="hover">CONTACT ME</a>
+        </div>
+
+        <div class="hero__meta reveal">
+          <div><span>LOCATION</span><strong>Erode, Tamil Nadu, India</strong></div>
+          <div><span>STUDIES</span><strong>2nd Year · B.Tech IT</strong></div>
+          <div><span>STATUS</span><strong class="live"><i></i> Building &amp; learning</strong></div>
+        </div>
+      </div>
+
+      <div class="hero__visual reveal">
+        <div class="orb-wrap">
+          <img src="assets/images/santhosh-red-portrait.png" class="hero-portrait" alt="Santhosh portrait">
+          <div class="orb__halo"></div>
+          <div class="orb__ring orb__ring--1"></div>
+          <div class="orb__ring orb__ring--2"></div>
+          <div class="orb__label orb__label--a">3D // REALTIME</div>
+          <div class="orb__label orb__label--b">MIRROR CORE</div>
+          <div class="orb__coords">11.3410° N<br />77.7172° E</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__side" aria-hidden="true">
+      <span>ERODE · TAMIL NADU · INDIA</span>
+    </div>
+
+    <a href="#about" class="scroll-cue" data-cursor="hover" aria-label="Scroll to about section">
+      <span class="scroll-cue__text">SCROLL INTO THE DARK</span>
+      <span class="scroll-cue__line"><i></i></span>
+    </a>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section about" id="about" data-section="01">
+    <div class="section__head">
+      <p class="section__index reveal">01 <span>/</span> ABOUT</p>
+      <h2 class="section__title reveal">THE MIND <em>BEHIND</em> THE STATIC</h2>
+      <p class="section__lead reveal">A developer by training, a storyteller by instinct — building for the web and framing for the screen.</p>
+    </div>
+
+    <div class="about__grid">
+      <article class="profile-card tilt reveal" data-tilt data-cursor="hover">
+        <div class="profile-card__aura"></div>
+        <div class="profile-card__head">
+          <div class="profile-card__avatar" aria-hidden="true">
+            <span>S</span>
+            <i class="profile-card__scan"></i>
+          </div>
+          <div>
+            <h3 class="profile-card__name">SANTHOSH</h3>
+            <p class="profile-card__tag">B.Tech IT · Second Year</p>
+          </div>
+          <span class="profile-card__status"><i></i> ACTIVE</span>
+        </div>
+
+        <div class="profile-card__rows">
+          <div class="profile-card__row"><span>LOCATION</span><strong>Erode, Tamil Nadu, India</strong></div>
+          <div class="profile-card__row"><span>EDUCATION</span><strong>B.Tech Information Technology</strong></div>
+          <div class="profile-card__row"><span>COLLEGE</span><strong>Dr. N.G.P. Institute of Technology</strong></div>
+          <div class="profile-card__row"><span>YEAR</span><strong>Second Year</strong></div>
+          <div class="profile-card__row"><span>FOCUS</span><strong>Software · Web · Film</strong></div>
+        </div>
+
+        <div class="profile-card__foot">
+          <span>ID // SANTHOSH-IT-2K25</span>
+          <span class="profile-card__bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        </div>
+      </article>
+
+      <div class="about__text">
+        <p class="about__para reveal">Myself Santhosh, and I am from Erode. I am currently pursuing my second year of Bachelor of Technology in Information Technology (B.Tech IT) at Dr. N.G.P. Institute of Technology.</p>
+        <p class="about__para reveal">My career goal is to become a skilled software developer and establish my own startup company in the future.</p>
+        <p class="about__para reveal">I have developed two websites, which demonstrate my interest in web development and my practical technical skills.</p>
+        <p class="about__para reveal">Apart from technology, filmmaking is one of my passions. I am particularly interested in scriptwriting, storytelling, and film direction.</p>
+
+        <div class="about__stats reveal">
+          <div class="stat"><strong data-count="2">0</strong><span>WEBSITES BUILT</span></div>
+          <div class="stat"><strong data-count="2">0</strong><span>YEAR OF B.TECH</span></div>
+          <div class="stat"><strong data-count="1">0</strong><span>SHORT FILM</span></div>
+        </div>
+
+        <div class="about__tags reveal">
+          <span>SOFTWARE DEVELOPMENT</span>
+          <span>WEB DEVELOPMENT</span>
+          <span>SCRIPTWRITING</span>
+          <span>STORYTELLING</span>
+          <span>FILM DIRECTION</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section projects" id="projects" data-section="02">
+    <div class="section__head">
+      <p class="section__index reveal">02 <span>/</span> SELECTED WORK</p>
+      <h2 class="section__title reveal">THINGS I'VE <em>BUILT</em></h2>
+      <p class="section__lead reveal">Two platforms built to solve real problems — one for children's medical treatment, one for emergency blood availability across Tamil Nadu.</p>
+    </div>
+
+    <div class="projects__list">
+
+      <!-- PROJECT 01 -->
+      <article class="project tilt reveal" data-tilt data-cursor="hover">
+        <div class="project__glow"></div>
+        <div class="project__media">
+          <div class="mockup mockup--01">
+            <div class="mockup__bar"><i></i><i></i><i></i><span>itz-santhosh525.github.io/FRONTEND-OF-ICF-APP</span></div>
+            <div class="mockup__body">
+              <div class="mockup__nav"><b>ICF</b><span>CASES</span><span>HOSPITALS</span><span>AUTHORITY</span></div>
+              <div class="mockup__hero">
+                <p>EVERY CHILD DESERVES<br /><em>A FIGHTING CHANCE</em></p>
+                <div class="mockup__cta">DONATE NOW</div>
+              </div>
+              <div class="mockup__cards"><i></i><i></i><i></i></div>
+            </div>
+            <div class="mockup__scan"></div>
+          </div>
+          <span class="project__badge">PROJECT 01</span>
+          <span class="project__type">FULL-STACK PLATFORM</span>
+        </div>
+
+        <div class="project__content">
+          <h3 class="project__title">Full-Stack Crowdfunding Platform for Children's Medical Treatment</h3>
+          <p class="project__desc">Developed a full-stack crowdfunding platform to support children requiring medical treatment.</p>
+
+          <div class="project__features">
+            <div class="feature">
+              <span class="feature__num">01</span>
+              <div>
+                <h4>Hospital Portal</h4>
+                <p>Registered hospitals can log in, submit pediatric medical cases, upload supporting documents, and provide estimated treatment costs.</p>
+              </div>
+            </div>
+            <div class="feature">
+              <span class="feature__num">02</span>
+              <div>
+                <h4>Government Health Authority Portal</h4>
+                <p>Authorized officers review applications, conduct on-site hospital visits, verify medical records and expenses, and approve or reject cases.</p>
+              </div>
+            </div>
+            <div class="feature">
+              <span class="feature__num">03</span>
+              <div>
+                <h4>Public Crowdfunding</h4>
+                <p>Donors can browse verified medical cases and contribute towards children's treatment.</p>
+              </div>
+            </div>
+          </div>
+
+          <p class="project__note"><strong>Note:</strong> Hospital and Authority dashboards are restricted to authorized credentials stored in MongoDB. One account for each role is configured for demonstration.</p>
+
+          <div class="project__tech">
+            <span>HTML</span><span>CSS</span><span>JAVASCRIPT</span><span>NODE.JS</span><span>EXPRESS.JS</span><span>MONGODB</span>
+          </div>
+
+          <a class="btn btn--primary project__link" href="https://itz-santhosh525.github.io/FRONTEND-OF-ICF-APP/" target="_blank" rel="noopener noreferrer" data-cursor="hover">
+            <span class="btn__glow"></span>
+            <span class="btn__text">LIVE DEMO</span>
+            <span class="btn__arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- PROJECT 02 -->
+      <article class="project project--reverse tilt reveal" data-tilt data-cursor="hover">
+        <div class="project__glow"></div>
+        <div class="project__media">
+          <div class="mockup mockup--02">
+            <div class="mockup__bar"><i></i><i></i><i></i><span>itz-santhosh25.github.io/TNBA</span></div>
+            <div class="mockup__body">
+              <div class="mockup__nav"><b>TNBA</b><span>SEARCH</span><span>BANKS</span><span>EMERGENCY</span></div>
+              <div class="mockup__search">
+                <span class="mockup__drop">B+ ▾</span>
+                <span class="mockup__btn">FIND BLOOD</span>
+              </div>
+              <div class="mockup__list">
+                <div class="mockup__item"><b>Erode Blood Centre</b><i>AVAILABLE</i></div>
+                <div class="mockup__item"><b>Coimbatore Medical Bank</b><i>AVAILABLE</i></div>
+                <div class="mockup__item"><b>Salem Regional Bank</b><i class="low">LOW STOCK</i></div>
+              </div>
+            </div>
+            <div class="mockup__scan"></div>
+          </div>
+          <span class="project__badge">PROJECT 02</span>
+          <span class="project__type">EMERGENCY COORDINATION</span>
+        </div>
+
+        <div class="project__content">
+          <h3 class="project__title">Tamil Nadu Blood Bank Availability Platform <span>(TNBA)</span></h3>
+          <p class="project__desc">Developed a blood bank availability tracking platform to support faster medical emergency coordination across Tamil Nadu.</p>
+
+          <div class="project__features">
+            <div class="feature">
+              <span class="feature__num">01</span>
+              <div>
+                <h4>Problem Solved</h4>
+                <p>Reduces delays caused by hospitals manually contacting multiple blood banks to find available blood units.</p>
+              </div>
+            </div>
+            <div class="feature">
+              <span class="feature__num">02</span>
+              <div>
+                <h4>Key Functionality</h4>
+                <p>Enables hospitals to search for specific blood groups and identify nearby facilities with available stock, helping save valuable time during emergencies.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="project__tech">
+            <span>HTML</span><span>CSS</span><span>JAVASCRIPT</span><span>RESPONSIVE UI</span><span>DATA SEARCH</span>
+          </div>
+
+          <a class="btn btn--primary project__link" href="https://itz-santhosh25.github.io/TNBA/" target="_blank" rel="noopener noreferrer" data-cursor="hover">
+            <span class="btn__glow"></span>
+            <span class="btn__text">LIVE DEMO</span>
+            <span class="btn__arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- FILM -->
+  <section class="section film" id="film" data-section="03">
+    <div class="section__head">
+      <p class="section__index reveal">03 <span>/</span> EXTRACURRICULAR</p>
+      <h2 class="section__title reveal">BEHIND THE <em>CAMERA</em></h2>
+      <p class="section__lead reveal">Filmmaking is one of my passions. I am particularly interested in scriptwriting, storytelling, and film direction.</p>
+    </div>
+
+    <div class="film__stage">
+      <div class="film__poster reveal" data-cursor="hover" id="poster">
+        <picture>
+          <source srcset="assets/images/rewind-poster.webp" type="image/webp" />
+          <img src="assets/images/rewind-poster.jpg" alt="Cinematic poster artwork for the short film Rewind — a silhouette facing a doorway of red light" />
+        </picture>
+        <div class="film__poster-shade"></div>
+        <div class="film__poster-grain"></div>
+        <div class="film__poster-title">
+          <span class="film__poster-label">A SHORT FILM</span>
+          <h3>REWIND</h3>
+          <span class="film__poster-credit">WRITTEN &amp; DIRECTED BY SANTHOSH</span>
+        </div>
+        <button class="film__play" id="play-trailer" type="button" aria-label="Play the short film Rewind" data-cursor="hover">
+          <span class="film__play-ring"></span>
+          <span class="film__play-icon" aria-hidden="true"></span>
+          <span class="film__play-text">PLAY TRAILER</span>
+        </button>
+      </div>
+
+      <div class="film__info">
+        <div class="film__reel reveal" aria-hidden="true">
+          <div class="reel">
+            <div class="reel__disc">
+              <span class="reel__hole"></span>
+              <i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="reel__strip">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <p class="film__reel-caption">35MM · SHORT FILM · TAMIL</p>
+        </div>
+
+        <h3 class="film__heading reveal">SHORT FILM: <em>REWIND</em></h3>
+        <p class="film__text reveal">Filmmaking is one of my passions. I am particularly interested in scriptwriting, storytelling, and film direction.</p>
+        <p class="film__text reveal">My Short Film: <strong>REWIND</strong> — an original story told through atmosphere, silence, and the things we wish we could play again.</p>
+
+        <div class="film__credits reveal">
+          <div><span>ROLE</span><strong>Writer / Director</strong></div>
+          <div><span>FORMAT</span><strong>Short Film</strong></div>
+          <div><span>LANGUAGE</span><strong>Tamil</strong></div>
+          <div><span>RELEASE</span><strong>YouTube</strong></div>
+        </div>
+
+        <div class="film__actions reveal">
+          <button class="btn btn--primary" id="play-trailer-2" type="button" data-cursor="hover">
+            <span class="btn__glow"></span>
+            <span class="btn__text">WATCH THE FILM</span>
+            <span class="btn__arrow" aria-hidden="true">▶</span>
+          </button>
+          <a class="btn btn--ghost" href="https://youtu.be/ATxx1t8d6Aw?si=XBj54WYn0-WAv67T" target="_blank" rel="noopener noreferrer" data-cursor="hover">OPEN ON YOUTUBE ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section skills" id="skills" data-section="04">
+    <div class="section__head">
+      <p class="section__index reveal">04 <span>/</span> CAPABILITIES</p>
+      <h2 class="section__title reveal">TOOLS OF THE <em>CRAFT</em></h2>
+      <p class="section__lead reveal">The stack I build with, and the human skills I bring to every team and every story.</p>
+    </div>
+
+    <div class="skills__grid" id="skills-grid">
+      <article class="skill tilt reveal" data-tilt data-cursor="hover"><span class="skill__num">01</span><h3>HTML</h3><p>Semantic, accessible structure</p><i class="skill__line"></i></article>
+      <article class="skill tilt reveal" data-tilt data-cursor="hover"><span class="skill__num">02</span><h3>CSS</h3><p>Layout, motion &amp; responsive design</p><i class="skill__line"></i></article>
+      <article class="skill tilt reveal" data-tilt data-cursor="hover"><span class="skill__num">03</span><h3>JavaScript</h3><p>Interactive, dynamic interfaces</p><i class="skill__line"></i></article>
+      <article class="skill tilt reveal" data-tilt data-cursor="hover"><span class="skill__num">04</span><h3>Node.js</h3><p>Server-side JavaScript</p><i class="skill__line"></i></article>
+      <article class="skill tilt reveal" data-tilt data-cursor="hover"><span class="skill__num">05</span><h3>Express.js</h3><p>REST APIs &amp; backend routing</p><i class="skill__line"></i></article>
+      <article class="skill tilt reveal" data-tilt data-cursor="hover"><span class="skill__num">06</span><h3>MongoDB</h3><p>Document data &amp; authentication</p><i class="skill__line"></i></article>
+      <article class="skill tilt reveal" data-tilt data-cursor="hover"><span class="skill__num">07</span><h3>Web Development</h3><p>End-to-end site building</p><i class="skill__line"></i></article>
+      <article class="skill tilt reveal" data-tilt data-cursor="hover"><span class="skill__num">08</span><h3>Full-Stack Development</h3><p>Frontend to database</p><i class="skill__line"></i></article>
+      <article class="skill tilt reveal" data-tilt data-cursor="hover"><span class="skill__num">09</span><h3>Problem Solving</h3><p>Breaking down hard problems</p><i class="skill__line"></i></article>
+      <article class="skill tilt reveal" data-tilt data-cursor="hover"><span class="skill__num">10</span><h3>Teamwork</h3><p>Building with people</p><i class="skill__line"></i></article>
+      <article class="skill tilt reveal" data-tilt data-cursor="hover"><span class="skill__num">11</span><h3>Creative Thinking</h3><p>Ideas before code</p><i class="skill__line"></i></article>
+    </div>
+
+    <div class="skills__marquee" aria-hidden="true">
+      <div class="marquee">
+        <span>SOFTWARE DEVELOPMENT · WEB DEVELOPMENT · SCRIPTWRITING · STORYTELLING · FILM DIRECTION · </span>
+        <span>SOFTWARE DEVELOPMENT · WEB DEVELOPMENT · SCRIPTWRITING · STORYTELLING · FILM DIRECTION · </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact" id="contact" data-section="05">
+    <div class="contact__grid">
+      <div class="contact__copy">
+        <p class="section__index reveal">05 <span>/</span> CONTACT</p>
+        <h2 class="contact__title reveal">LET'S CREATE<br /><em>SOMETHING AMAZING.</em></h2>
+        <p class="contact__lead reveal">Have a project, a role, a story, or an idea worth building? The line is open. Tell me what you're imagining and let's make it real.</p>
+
+        <div class="contact__links reveal">
+          <a class="contact__link" href="#" data-placeholder="github" data-cursor="hover" aria-disabled="true">
+            <span class="contact__link-label">GITHUB</span>
+            <span class="contact__link-value">Add your GitHub profile URL</span>
+            <span class="contact__link-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="contact__link" href="#" data-placeholder="linkedin" data-cursor="hover" aria-disabled="true">
+            <span class="contact__link-label">LINKEDIN</span>
+            <span class="contact__link-value">Add your LinkedIn profile URL</span>
+            <span class="contact__link-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="contact__link" href="#" data-placeholder="email" data-cursor="hover" aria-disabled="true">
+            <span class="contact__link-label">EMAIL</span>
+            <span class="contact__link-value">Add your email address</span>
+            <span class="contact__link-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <p class="contact__note reveal">Social placeholders are intentionally left unlinked — no invented profiles or addresses.</p>
+      </div>
+
+      <form class="contact__form reveal" id="contact-form" novalidate>
+        <div class="contact__form-head">
+          <span>TRANSMISSION</span>
+          <span class="contact__form-status" id="form-status">STANDBY</span>
+        </div>
+
+        <div class="field">
+          <label for="name">NAME</label>
+          <input id="name" name="name" type="text" placeholder="Your name" autocomplete="name" required data-cursor="hover" />
+          <span class="field__line"></span>
+          <span class="field__error" data-error-for="name"></span>
+        </div>
+
+        <div class="field">
+          <label for="email">EMAIL</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required data-cursor="hover" />
+          <span class="field__line"></span>
+          <span class="field__error" data-error-for="email"></span>
+        </div>
+
+        <div class="field">
+          <label for="message">MESSAGE</label>
+          <textarea id="message" name="message" rows="5" placeholder="Tell me about your idea..." required data-cursor="hover"></textarea>
+          <span class="field__line"></span>
+          <span class="field__error" data-error-for="message"></span>
+        </div>
+
+        <button class="btn btn--primary btn--full" type="submit" data-cursor="hover">
+          <span class="btn__glow"></span>
+          <span class="btn__text">SEND MESSAGE</span>
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+
+        <p class="contact__form-note">This form validates and stores your message locally in the browser. Connect your own endpoint (see README) to deliver it to your inbox.</p>
+
+        <div class="contact__success" id="contact-success" hidden>
+          <span class="contact__success-icon" aria-hidden="true">✓</span>
+          <h3>MESSAGE CAPTURED</h3>
+          <p id="contact-success-text">Your message has been sealed and saved in this browser. Connect an endpoint to send it directly.</p>
+          <button class="btn btn--ghost" type="button" id="reset-form" data-cursor="hover">SEND ANOTHER</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <span class="footer__brand">SANTHOSH</span>
+      <p>B.Tech Information Technology · Dr. N.G.P. Institute of Technology<br />Erode, Tamil Nadu, India</p>
+      <a href="#hero" class="footer__top-link" data-cursor="hover">BACK TO TOP ↑</a>
+    </div>
+    <div class="footer__bottom">
+      <span>© <span id="year">2025</span> SANTHOSH — ALL RIGHTS RESERVED</span>
+      <span>DESIGNED &amp; BUILT AS A CINEMATIC EXPERIENCE</span>
+      <span class="footer__quote">"EVERY FRAME IS A CHOICE."</span>
+    </div>
+  </footer>
+</main>
+
+<!-- Trailer modal -->
+<div class="modal" id="trailer-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Rewind short film player">
+  <div class="modal__backdrop" data-close-modal></div>
+  <div class="modal__panel">
+    <div class="modal__head">
+      <span>NOW PLAYING · REWIND</span>
+      <button class="modal__close" type="button" data-close-modal aria-label="Close player" data-cursor="hover">✕</button>
+    </div>
+    <div class="modal__video" id="modal-video"></div>
+    <div class="modal__foot">
+      <p>SHORT FILM · WRITTEN &amp; DIRECTED BY SANTHOSH</p>
+      <a href="https://youtu.be/ATxx1t8d6Aw?si=XBj54WYn0-WAv67T" target="_blank" rel="noopener noreferrer" data-cursor="hover">OPEN ON YOUTUBE ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="vendor/three.min.js"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="js/intro.js"></script>
+<script src="js/three-scene.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
